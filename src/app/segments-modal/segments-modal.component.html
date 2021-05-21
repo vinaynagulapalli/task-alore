@@ -1,0 +1,70 @@
+<div class="segment-modal">
+    <form [formGroup]="segmentForm">
+        <p>Add a Table <span class="icon-cross" (click)="dialogRef.close(false)"><img
+                    src="../../assets/images/cross-icon.png" alt=""></span></p>
+        <div class="row modal-form">
+            <div class="col-12 inp-group">
+                <label for="name">Name*</label>
+                <input type="text" id="name" class="inp-control" appRestrictFirstSpace formControlName="name"
+                    [ngClass]="{ 'is-inp-invalid': getValid('name')}">
+                <div class="error-view">
+                    
+                    <span *ngIf="segmentForm?.controls.name.errors?.required && isSubmitted" class=" error-msg-txt">
+                        Please select Above atleast one
+                    </span>
+                </div>
+            </div>
+            <div class="col-12 inp-group emoji-mart-section">
+                <label for="icon">Icon</label>
+                <input type="text" id="icon" formControlName="icon" appRestrictFirstSpace class="inp-control"
+                    (click)="showEmoji()" [ngClass]="{ 'is-inp-invalid': getValid('icon')}">
+                <span class="down-arrow-span"><img src="../../assets/images/down-arrow.png" alt=""></span>
+                <div class="emoji-select">
+                    <emoji-mart *ngIf="showPicker" (emojiClick)="addEmoji($event)"></emoji-mart>
+                </div>
+                <div class="error-view">
+                    <span *ngIf="segmentForm?.controls.icon.errors?.required && isSubmitted" class=" error-msg-txt">
+                        Please select Above Icon
+                    </span>
+                </div>
+            </div>
+            <div class="col-12 inp-group colors-input" *ngIf="data.type === 'SubSegments'">
+                <label for="color">Color</label>
+                <input type="text" id="color" formControlName="color" appRestrictFirstSpace class="inp-control"
+                    [ngClass]="{ 'is-inp-invalid': getValid('color')}" value="selectedColor" (click)="displayColors()">
+                <span class="down-arrow-span"><img src="../../assets/images/down-arrow.png" alt=""></span>
+                <div class="error-view">
+                    <span *ngIf="segmentForm?.controls.color.errors?.required && isSubmitted" class=" error-msg-txt">
+                        Please select Above atleast one
+                    </span>
+                </div>
+                <div class="color-bg" [ngStyle]="{backgroundColor:selectedColor}">
+
+                </div>
+                <div class="color-palette-section" *ngIf="showcolors">
+                    <div class="row main-container">
+                        <div class="col container-codes" *ngFor="let colorCodes of colorsPalette">
+                            <div (click)="onSelect(colorCodes)" class="color-codes"
+                                [ngStyle]="{backgroundColor:colorCodes}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="data.type !== 'SubSegments'">
+                <p class="description">Description</p>
+                <div class="inp-group">
+                    <textarea type="text" rows="6" class="inp-control" appRestrictFirstSpace
+                        placeholder="Description for your Segment" formControlName="description"
+                        [ngClass]="{ 'is-inp-invalid': getValid('description')}"
+                        style="max-height: none; height: unset"></textarea>
+                </div>
+            </div>
+            <div class="col-12" mat-dialog-actions>
+                <button class="add-btn" (click)="addSegment()" type="button" [disabled]="segmentForm.valid">{{ data.type ==='SubSegments' ? 'Add' :
+                    'save'}} </button>
+                <button class="cancle-btn" (click)="dialogRef.close(false)" type="button">Cancle</button>
+            </div>
+        </div>
+    </form>
+</div>

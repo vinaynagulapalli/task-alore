@@ -1,0 +1,45 @@
+
+<div class="left-content">
+    <p class="porspector-header">Prospector</p>
+    <div class="side-segments">
+        <div>
+            <input type="text" class="input-search" (input)="searchSegments($event.target.value)"
+                placeholder="Search for a table or a segment">
+        </div>
+        <p class="segment-text">SEGMENTS</p>
+        <p class="segment-header" *ngFor="let segment of segments">
+            <span class="segment-icon">{{segment.segmentIcon}}</span>{{segment.segmentName}}
+        </p>
+    </div>
+    <div>
+        <button type="button" class="addnewSegments-left" (click)="openSegment()">+ Add Segments</button>
+    </div>
+</div>
+<div class="top-header">
+    <div class="top-header-images">
+        <div>
+            <span><img src="assets/images/Vector.png" alt="vector"></span><span><img src="assets/images/down-arrow.png"
+                    alt=""></span>
+        </div>
+        <div>
+            <span><img src="assets/images/image 3.png" alt="menu"></span>
+        </div>
+    </div>
+</div>
+<div class="segments-count">
+    <div *ngFor="let segment of segments ; let i = index" class="segment-container">
+        <p class="segment-header"> <span class="segment-icon">{{segment.segmentIcon}}</span>{{segment.segmentName}}</p>
+        <span (click)="showSegments(i)" class="segments-down-arrow"><img src="assets/images/down-arrow.png" alt=""></span>
+        <div class="segments-list" *ngIf="segment.showValue">
+            <div *ngFor="let item of segment.subSegmentName" class="new-segments">
+                <div class="new-segments-card" [style.border-color]="item.subSubSegmentsColor">
+                    {{item.subSubSegmentsIcon}}
+                </div> <span class="bg-dot" [ngStyle]="{'background': item.subSubSegmentsColor}"></span>
+                <p class="segments-name">{{item.subSubSegmentsName}}</p>
+            </div>
+            <div class="add-segments-card" (click)="addNewSegments(i)">
+                +
+            </div>
+        </div>
+    </div>
+</div>
